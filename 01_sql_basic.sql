@@ -76,7 +76,9 @@ WHERE title LIKE 'U%';
 
 -- 11. Išrinkti filmus, kur special_features turi reikšmę 'Deleted Scenes'.
 -- Rezultatas: title, special_features.
-SELECT *
+SELECT
+    title,
+    special_features
 FROM film
 WHERE special_features LIKE '%Deleted Scenes%';
 

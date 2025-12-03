@@ -31,15 +31,18 @@ SELECT
     return_date
 FROM rental
 WHERE DATE(rental_date) = DATE(return_date)
-ORDER BY rental_id DESC;
+ORDER BY rental_date DESC;
 
 -- 4. Kuris klientas išleido daugiausia pinigų nuomos paslaugoms? Pateikti tik
 -- vieną klientą ir išleistą pinigų sumą
 SELECT
-    customer_id,
-    SUM(amount) AS total_spent
-FROM payment
-GROUP BY customer_id
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    SUM(p.amount) AS total_spent
+FROM payment p
+JOIN customer c ON c.customer_id = p.customer_id
+GROUP BY c.customer_id
 ORDER BY total_spent DESC
 LIMIT 1;
 
@@ -47,8 +50,7 @@ LIMIT 1;
 -- pardavė ir už kokią vertę?
 SELECT
     staff_id,
-    COUNT(DISTINCT customer_id) AS customer_count,
-    COUNT(*) AS rental_count,
+    COUNT(DISTINCT customer_id) AS unique_customers,
     SUM(amount) AS total_amount
 FROM payment
 GROUP BY staff_id;
@@ -57,18 +59,23 @@ GROUP BY staff_id;
 -- vertę, pateikti nuo mažiausio nuomos id. 
 SELECT
     rental_id,
-    SUM(amount) AS total_value
-FROM payment
+    (
+        SELECT rental_duration FROM film f
+        JOIN inventory i ON i.film_id = f.film_id
+        WHERE i.inventory_id = r.inventory_id
+    ) AS duration_value
+FROM rental r
 WHERE rental_id LIKE '9%'
 GROUP BY rental_id
 ORDER BY rental_id;
 
 -- 7. Kurios kategorijos filmų yra mažiausiai?
 SELECT
-    category_id,
+    c.name,
     COUNT(*) AS film_count
-FROM film_category
-GROUP BY category_id
+FROM film_category fc
+JOIN category c ON c.category_id = fc.category_id
+GROUP BY c.name
 ORDER BY film_count ASC
 LIMIT 1;
 
@@ -80,7 +87,8 @@ SELECT
 FROM film
 WHERE
     rating = 'R'
-    AND description LIKE '%MySQL%';
+    AND description LIKE '%MySQL%'
+ORDER BY LENGTH(description);
 
 -- 9. Surasti filmų id, kurių trukmė 46, 47, 48, 49, 50, 51 minutės.
 -- Rezultatas: pateikiamas didėjančia tvarka pagal trukmę.
@@ -105,8 +113,8 @@ WHERE
 SELECT COUNT(*) AS actor_count
 FROM actor
 WHERE
-    first_name LIKE 'A%'
-    AND last_name LIKE 'W%';
+    last_name LIKE 'A%'
+    OR last_name LIKE '%W';
 
 -- 12. Suskaičiuoti kiek yra klientų, kurių pavardėje yra dvi O raidės ('OO').
 SELECT COUNT(*) AS count_customers
@@ -120,7 +128,7 @@ SELECT
     COUNT(*) AS address_count
 FROM address
 GROUP BY district
-HAVING COUNT(*) >= 9;
+HAVING COUNT(*) > 9;
 
 -- 14. Į ekraną išvesti visus unikalius rajonų pavadinimus, kurie baigiasi
 -- raide 'D'.
