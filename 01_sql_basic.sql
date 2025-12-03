@@ -1,4 +1,4 @@
--- vim:fenc=utf-8:tw=79:nu:ai:si:et:ts=2:sw=2
+-- vim:fenc=utf-8:tw=79:nu:ai:si:et:ts=4:sw=4
 
 -- ----------------------------------------------
 -- SQL - Basic
