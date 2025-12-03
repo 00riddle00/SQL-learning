@@ -55,10 +55,11 @@ SELECT
 FROM film
 GROUP BY rating, special_features;
 
--- 9. Susumuoti replacement_cost pagal dimensiją special_features ir rezultatą pateikti
--- mažėjimo tvarka.
-SELECT special_features,
-       SUM(replacement_cost) AS total_replacement_cost
+-- 9. Susumuoti replacement_cost pagal dimensiją special_features ir rezultatą
+-- pateikti mažėjimo tvarka.
+SELECT
+    special_features,
+    SUM(replacement_cost) AS total_replacement_cost
 FROM film
 GROUP BY special_features
 ORDER BY total_replacement_cost DESC;
