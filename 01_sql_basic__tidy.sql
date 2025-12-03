@@ -59,12 +59,12 @@ GROUP BY rating, special_features;
 -- pateikti mažėjimo tvarka.
 SELECT
     special_features,
-    SUM(replacement_cost) AS total_replacement_cost
+    SUM(replacement_cost) AS total_cost
 FROM film
 GROUP BY special_features
-ORDER BY total_replacement_cost DESC;
+ORDER BY total_cost DESC;
 
--- 10. Išrinkti filmus, kurių pavadinimas prasideda raide 'U'. 
+-- 10. Išrinkti filmus, kurių pavadinimas prasideda raide 'U'.
 -- Rezultatas: film_id, title, description, rating.
 SELECT
     film_id,

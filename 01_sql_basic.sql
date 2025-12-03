@@ -20,18 +20,24 @@ SELECT DISTINCT rating
 FROM film;
 
 -- 4. Susumuoti filmų nuomos trukmes pagal rating dimensiją.
-SELECT rating, SUM(rental_duration) AS total_rental_duration
+SELECT
+    rating,
+    SUM(rental_duration) AS total_rental_duration
 FROM film
 GROUP BY rating;
 
 -- 5. Pateikti trumpiausią ir ilgiausią nuomos trukmes.
-SELECT MIN(rental_duration) AS shortest,
-       MAX(rental_duration) AS longest
+SELECT
+    MIN(rental_duration) AS shortest,
+    MAX(rental_duration) AS longest
 FROM film;
 
 -- 6. Išrinkti visus filmus, kurių nuomos trukmė didesnė arba lygi 6.
 -- Rezultatas: film_id, title, description
-SELECT film_id, title, description
+SELECT
+    film_id,
+    title,
+    description
 FROM film
 WHERE rental_duration >= 6;
 
@@ -42,21 +48,29 @@ WHERE rental_duration >= 6;
 
 -- 8. Suskaičiuoti vidutinę nuomos trukmę, pagal dimensijas rating ir
 -- special_features.
-SELECT rating, special_features,
-       AVG(rental_duration) AS avg_duration
+SELECT
+    rating,
+    special_features,
+    AVG(rental_duration) AS avg_duration
 FROM film
 GROUP BY rating, special_features;
 
 -- 9. Susumuoti replacement_cost pagal dimensiją special_features ir rezultatą
 -- pateikti mažėjimo tvarka.
-SELECT special_features, SUM(replacement_cost) AS total_cost
+SELECT
+    special_features,
+    SUM(replacement_cost) AS total_cost
 FROM film
 GROUP BY special_features
 ORDER BY total_cost DESC;
 
 -- 10. Išrinkti filmus, kurių pavadinimas prasideda raide 'U'.
 -- Rezultatas: film_id, title, description, rating.
-SELECT film_id, title, description, rating
+SELECT
+    film_id,
+    title,
+    description,
+    rating
 FROM film
 WHERE title LIKE 'U%';
 
@@ -68,15 +82,23 @@ WHERE special_features LIKE '%Deleted Scenes%';
 
 -- 12. Išrinkti filmus, kai nuomos trukmė yra 3 ir reitingas NC-17.
 -- Rezultatas: film_id, title, rental_duration, rating
-SELECT film_id, title, rental_duration, rating
+SELECT
+    film_id,
+    title,
+    rental_duration,
+    rating
 FROM film
-WHERE rental_duration = 3
-  AND rating = 'NC-17';
+WHERE
+    rental_duration = 3
+    AND rating = 'NC-17';
 
 -- 13. Išrinkti filmus, kai nuomos trukmė yra 4 arba 5, ir pavadinimas
 -- prasideda raide 'V'.
 -- Rezultatas: title, rental_duration.
-SELECT title, rental_duration
+SELECT
+    title,
+    rental_duration
 FROM film
-WHERE rental_duration IN (4, 5)
-  AND title LIKE 'V%';
+WHERE
+    rental_duration IN (4, 5)
+    AND title LIKE 'V%';
