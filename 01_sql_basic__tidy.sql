@@ -4,6 +4,7 @@
 -- SQL - Basic
 -- Atlikti žemiau aprašytas užduotis iš sakila duomenų bazės film lentelės.
 -- ----------------------------------------------
+
 USE sakila;
 
 -- 1. Susumuoti filmų nuomos trukmes.

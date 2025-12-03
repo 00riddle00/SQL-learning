@@ -4,9 +4,10 @@
 -- SQL - Basic
 -- Atlikti žemiau aprašytas užduotis iš sakila duomenų bazės film lentelės.
 -- ----------------------------------------------
-USE sakila;
--- 1. Susumuoti filmų nuomos trukmes.
 
+USE sakila;
+
+-- 1. Susumuoti filmų nuomos trukmes.
 SELECT SUM(rental_duration) AS total_rental_duration
 FROM film;
 
@@ -24,20 +25,17 @@ FROM film
 GROUP BY rating;
 
 -- 5. Pateikti trumpiausią ir ilgiausią nuomos trukmes.
-
 SELECT MIN(rental_duration) AS shortest,
        MAX(rental_duration) AS longest
 FROM film;
 
 -- 6. Išrinkti visus filmus, kurių nuomos trukmė didesnė arba lygi 6.
 -- Rezultatas: film_id, title, description
-
 SELECT film_id, title, description
 FROM film
 WHERE rental_duration >= 6;
 
 -- 7. Kiek yra tokių filmų, kurių nuomos trukmė didesnė arba lygi 6?
-
 SELECT COUNT(*) AS count_films
 FROM film
 WHERE rental_duration >= 6;
@@ -58,7 +56,6 @@ ORDER BY total_cost DESC;
 
 -- 10. Išrinkti filmus, kurių pavadinimas prasideda raide 'U'.
 -- Rezultatas: film_id, title, description, rating.
-
 SELECT film_id, title, description, rating
 FROM film
 WHERE title LIKE 'U%';
@@ -71,7 +68,6 @@ WHERE special_features LIKE '%Deleted Scenes%';
 
 -- 12. Išrinkti filmus, kai nuomos trukmė yra 3 ir reitingas NC-17.
 -- Rezultatas: film_id, title, rental_duration, rating
-
 SELECT film_id, title, rental_duration, rating
 FROM film
 WHERE rental_duration = 3
@@ -80,7 +76,6 @@ WHERE rental_duration = 3
 -- 13. Išrinkti filmus, kai nuomos trukmė yra 4 arba 5, ir pavadinimas
 -- prasideda raide 'V'.
 -- Rezultatas: title, rental_duration.
-
 SELECT title, rental_duration
 FROM film
 WHERE rental_duration IN (4, 5)
