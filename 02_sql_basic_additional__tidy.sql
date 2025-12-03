@@ -36,13 +36,10 @@ ORDER BY rental_id DESC;
 -- 4. Kuris klientas išleido daugiausia pinigų nuomos paslaugoms? Pateikti tik
 -- vieną klientą ir išleistą pinigų sumą
 SELECT
-    c.customer_id,
-    c.first_name,
-    c.last_name,
-    SUM(p.amount) AS total_spent
-FROM payment p
-JOIN customer c ON c.customer_id = p.customer_id
-GROUP BY c.customer_id, c.first_name, c.last_name
+    customer_id,
+    SUM(amount) AS total_spent
+FROM payment
+GROUP BY customer_id
 ORDER BY total_spent DESC
 LIMIT 1;
 
@@ -68,11 +65,10 @@ ORDER BY rental_id;
 
 -- 7. Kurios kategorijos filmų yra mažiausiai?
 SELECT
-    c.name,
+    category_id,
     COUNT(*) AS film_count
-FROM film_category fc
-JOIN category c ON c.category_id = fc.category_id
-GROUP BY c.name
+FROM film_category
+GROUP BY category_id
 ORDER BY film_count ASC
 LIMIT 1;
 
