@@ -32,7 +32,7 @@ SELECT
 FROM film;
 
 -- 6. Išrinkti visus filmus, kurių nuomos trukmė didesnė arba lygi 6.
--- Reikalingi laukai: film_id, title, description
+-- Rezultatas: film_id, title, description
 SELECT
     film_id,
     title,
@@ -45,7 +45,8 @@ SELECT COUNT(*) AS count_films
 FROM film
 WHERE rental_duration >= 6;
 
--- 8. Suskaičiuoti vidutinę nuomos trukmę pagal rating ir special_features.
+-- 8. Suskaičiuoti vidutinę nuomos trukmę, pagal dimensijas rating ir
+-- special_features.
 SELECT
     rating,
     special_features,
@@ -53,18 +54,16 @@ SELECT
 FROM film
 GROUP BY rating, special_features;
 
--- 9. Susumuoti replacement_cost pagal rating ir special_features, pateikti
--- mažėjančia tvarka.
-SELECT
-    rating,
-    special_features,
-    SUM(replacement_cost) AS total_cost
+-- 9. Susumuoti replacement_cost pagal dimensiją special_features ir rezultatą pateikti
+-- mažėjimo tvarka.
+SELECT special_features,
+       SUM(replacement_cost) AS total_replacement_cost
 FROM film
-GROUP BY rating, special_features
-ORDER BY total_cost DESC;
+GROUP BY special_features
+ORDER BY total_replacement_cost DESC;
 
--- 10. Išrinkti filmus, kurių pavadinimas prasideda raide 'U'. Reikalingi
--- laukai: film_id, title, description, rating
+-- 10. Išrinkti filmus, kurių pavadinimas prasideda raide 'U'. 
+-- Rezultatas: film_id, title, description, rating.
 SELECT
     film_id,
     title,
@@ -74,6 +73,7 @@ FROM film
 WHERE title LIKE 'U%';
 
 -- 11. Išrinkti filmus, kur special_features turi reikšmę 'Deleted Scenes'.
+-- Rezultatas: title, special_features.
 SELECT
     film_id,
     title,
@@ -81,8 +81,8 @@ SELECT
 FROM film
 WHERE special_features LIKE '%Deleted Scenes%';
 
--- 12. Išrinkti filmus, kai nuomos trukmė yra 3 ir reitingas NC-17. Reikalingi
--- laukai: film_id, title, rental_duration, rating
+-- 12. Išrinkti filmus, kai nuomos trukmė yra 3 ir reitingas NC-17.
+-- Rezultatas: film_id, title, rental_duration, rating
 SELECT
     film_id,
     title,
@@ -94,7 +94,8 @@ WHERE
     AND rating = 'NC-17';
 
 -- 13. Išrinkti filmus, kai nuomos trukmė yra 4 arba 5, ir pavadinimas
--- prasideda raide 'V'. Reikalingi laukai: title, rental_duration
+-- prasideda raide 'V'.
+-- Rezultatas: title, rental_duration.
 SELECT
     title,
     rental_duration
