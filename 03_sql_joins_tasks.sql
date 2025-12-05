@@ -46,14 +46,12 @@ SELECT
 FROM payment AS p;
 
 -- 4. Suskaičiuoti, kiek kiekviena parduotuvė turi klientų.
-SELECT
-    s.store_id,
-    COUNT(c.customer_id) AS customer_count
-FROM store AS s
-INNER JOIN customer AS c
-    ON s.store_id = c.store_id
-GROUP BY s.store_id
-ORDER BY s.store_id;
+SELECT 
+    store_id,
+    COUNT(*) AS customer_count
+FROM customer
+GROUP BY store_id
+ORDER BY store_id;
 
 -- 5. Suskaičiuoti kiek yra kiekvieno žanro filmų.
 -- Rezultatas: filmų skaičius ir žanro pavadinimą. Rezultatą surikiuoti pagal
