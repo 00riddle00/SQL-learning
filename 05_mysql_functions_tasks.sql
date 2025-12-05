@@ -60,14 +60,17 @@ GROUP BY
     c.last_name
 ORDER BY total_paid DESC;
 
--- 5. Rodyti kiekvieną filmą, id, pavadinimo pirmus 2 žodžius ir ar jo trukmė
--- ilgesnė nei vidutinė (IF)
+-- 5. Rodyti kiekvieną filmą, id, pavadinimo pirmus 2 žodžius ir ar jo
+-- trukmė ilgesnė nei vidutinė (IF)
 -- !!! Turi SUBQUERY vidurkiui apskaičiuoti: SELECT AVG(...) FROM ...
 SELECT
     f.film_id,
     SUBSTRING_INDEX(f.title, ' ', 2) AS first_two_words,
     IF(
-        f.length > (SELECT AVG(f2.length) FROM film AS f2),
+        f.length > (
+            SELECT AVG(f2.length)
+            FROM film AS f2
+        ),
         'Longer than average',
         'Not longer than average'
     ) AS length_vs_average

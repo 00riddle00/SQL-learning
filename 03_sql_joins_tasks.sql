@@ -46,7 +46,7 @@ SELECT
 FROM payment AS p;
 
 -- 4. Suskaičiuoti, kiek kiekviena parduotuvė turi klientų.
-SELECT 
+SELECT
     store_id,
     COUNT(*) AS customer_count
 FROM customer
@@ -227,7 +227,8 @@ GROUP BY co.country_id, co.country
 ORDER BY customer_count DESC
 LIMIT 5;
 
--- 15. Suskaičiuoti kiekvienoje parduotuvėje bendrai visų klientų sumokėtą sumą.
+-- 15. Suskaičiuoti kiekvienoje parduotuvėje bendrai visų klientų sumokėtą
+-- sumą.
 -- Rezultatas: parduotuvės identifikatorius (store_id), parduotuvės adresas,
 -- miestas ir šalis, ir bendra sumokėtų mokėjimų suma.
 SELECT
