@@ -141,3 +141,29 @@ ORDER BY total DESC;
 
 ### Debugging queries
 MySQL date arithmetic can cause unsigned subtraction errors. Use explicit type casting or comparison operators instead of arithmetic when working with dates.
+
+## Git Workflow Rules
+
+### Staging and Committing
+- **User stages files**: The user is responsible for staging files with `git add`
+- **Claude commits staged files**: Claude Code only commits what is already staged
+- **Ask before staging**: If a file needs to be staged, ask the user first before running `git add`
+- **Partial commits**: Use `git commit --only <file1> <file2>` to commit only a subset of staged files when needed
+
+### Partially Staged Files
+When a file has both staged changes AND additional unstaged modifications:
+- Committing will include only the **staged version** in the commit
+- Unstaged modifications remain in the working directory
+- This applies whether committing all staged files or using `--only` for specific files
+- The staging area acts as a snapshot - commits capture exactly what's in the index at commit time
+
+### Commit Message Format
+Follow the repository's commit message style:
+- Concise, descriptive first line
+- Focus on what changed and why (not task numbers)
+- Include Claude Code attribution footer:
+  ```
+  🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+  Co-Authored-By: Claude <noreply@anthropic.com>
+  ```
