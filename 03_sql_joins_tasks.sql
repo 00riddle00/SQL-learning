@@ -42,7 +42,7 @@ LIMIT 10;
 SELECT
     MIN(p.amount) AS min_amount,
     MAX(p.amount) AS max_amount,
-    AVG(p.amount) AS avg_amount
+    ROUND(AVG(p.amount), 2) AS avg_amount
 FROM payment AS p;
 
 -- 4. Suskaičiuoti, kiek kiekviena parduotuvė turi klientų.

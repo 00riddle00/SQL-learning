@@ -51,9 +51,11 @@ WHERE rental_duration >= 6;
 SELECT
     rating,
     special_features,
-    AVG(rental_duration) AS avg_duration
+    ROUND(AVG(rental_duration), 2) AS avg_duration
 FROM film
-GROUP BY rating, special_features;
+GROUP BY
+    rating,
+    special_features;
 
 -- 9. Susumuoti replacement_cost pagal dimensiją special_features ir rezultatą
 -- pateikti mažėjimo tvarka.

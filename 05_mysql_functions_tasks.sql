@@ -20,7 +20,7 @@ WHERE a.last_name LIKE 'A%';
 SELECT
     c.first_name,
     c.last_name,
-    AVG(p.amount) AS avg_payment
+    ROUND(AVG(p.amount), 2) AS avg_payment
 FROM customer AS c
 INNER JOIN payment AS p
     ON c.customer_id = p.customer_id
@@ -76,13 +76,13 @@ SELECT
     ) AS length_vs_average
 FROM film AS f;
 
--- 6. Išveskite visas kategorijas ir skaičių filmų, priklausančių kiekvienai
--- kategorijai, bendrą pelną, vidutinį nuomos įkainį.
+-- 6. Išveskite visas kategorijas ir skaičių filmų, priklausančių
+-- kiekvienai kategorijai, bendrą pelną, vidutinį nuomos įkainį.
 SELECT
     c.name AS category_name,
     COUNT(DISTINCT f.film_id) AS film_count,
     SUM(p.amount) AS total_revenue,
-    AVG(f.rental_rate) AS avg_rental_rate
+    ROUND(AVG(f.rental_rate), 2) AS avg_rental_rate
 FROM category AS c
 INNER JOIN film_category AS fc
     ON c.category_id = fc.category_id
@@ -159,8 +159,8 @@ INNER JOIN film AS f
 WHERE DATEDIFF(r.return_date, r.rental_date) >= f.rental_duration + 3;
 
 -- 12. Raskite visų filmų pavadinimų raidžių skaičių vidurkį.
-SELECT AVG(CHAR_LENGTH(f.title)) AS avg_title_length
-FROM film AS f;
+SELECT ROUND(AVG(CHAR_LENGTH(title)), 2) AS avg_title_length
+FROM film;
 
 -- 13. Išveskite klientus, kurių vardai prasideda raide „M“, ir parodykite jų
 -- mokėjimų sumą.

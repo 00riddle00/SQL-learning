@@ -78,7 +78,7 @@ LIMIT 10;
 SELECT
     c.name AS category_name,
     COUNT(f.film_id) AS film_count,
-    AVG(f.length) AS avg_length
+    ROUND(AVG(f.length), 2) AS avg_length
 FROM category AS c
 INNER JOIN film_category AS fc
     ON c.category_id = fc.category_id
