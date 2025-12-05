@@ -153,9 +153,7 @@ INNER JOIN inventory AS i
     ON r.inventory_id = i.inventory_id
 INNER JOIN film AS f
     ON i.film_id = f.film_id
-WHERE
-    r.return_date IS NOT NULL
-    AND (DATEDIFF(r.return_date, r.rental_date) - f.rental_duration) >= 3;
+WHERE DATEDIFF(r.return_date, r.rental_date) >= f.rental_duration + 3;
 
 -- 12. Raskite visų filmų pavadinimų raidžių skaičių vidurkį.
 SELECT AVG(CHAR_LENGTH(f.title)) AS avg_title_length
