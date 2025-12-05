@@ -163,10 +163,9 @@ SELECT
     f.title
 FROM film AS f
 WHERE
-    NOT EXISTS (
-        SELECT 1
+    f.film_id NOT IN (
+        SELECT fc.film_id
         FROM film_category AS fc
-        WHERE fc.film_id = f.film_id
     )
 ORDER BY f.title ASC;
 
