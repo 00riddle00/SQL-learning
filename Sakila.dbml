@@ -1,0 +1,170 @@
+Table actor {
+  actor_id SMALLINT [pk]
+  first_name VARCHAR(45)
+  last_name VARCHAR(45)
+  last_update TIMESTAMP
+}
+
+Table address {
+  address_id SMALLINT [pk]
+  address VARCHAR(50)
+  address2 VARCHAR(50)
+  district VARCHAR(20)
+  city_id SMALLINT
+  postal_code VARCHAR(10)
+  phone VARCHAR(20)
+  location GEOMETRY
+  last_update TIMESTAMP
+}
+
+Table category {
+  category_id TINYINT [pk]
+  name VARCHAR(25)
+  last_update TIMESTAMP
+}
+
+Table city {
+  city_id SMALLINT [pk]
+  city VARCHAR(50)
+  country_id SMALLINT
+  last_update TIMESTAMP
+}
+
+Table country {
+  country_id SMALLINT [pk]
+  country VARCHAR(50)
+  last_update TIMESTAMP
+}
+
+Table customer {
+  customer_id SMALLINT [pk]
+  store_id TINYINT
+  first_name VARCHAR(45)
+  last_name VARCHAR(45)
+  email VARCHAR(50)
+  address_id SMALLINT
+  active TINYINT
+  create_date DATETIME
+  last_update TIMESTAMP
+}
+
+Table film {
+  film_id SMALLINT [pk]
+  title VARCHAR(128)
+  description TEXT
+  release_year YEAR
+  language_id TINYINT
+  original_language_id TINYINT
+  rental_duration TINYINT
+  rental_rate DECIMAL(4,2)
+  length SMALLINT
+  replacement_cost DECIMAL(5,2)
+  rating ENUM
+  special_features SET
+  last_update TIMESTAMP
+}
+
+Table film_actor {
+  actor_id SMALLINT [pk]
+  film_id SMALLINT [pk]
+  last_update TIMESTAMP
+}
+
+Table film_category {
+  film_id SMALLINT [pk]
+  category_id TINYINT [pk]
+  last_update TIMESTAMP
+}
+
+Table film_text {
+  film_id SMALLINT [pk]
+  title VARCHAR(255)
+  description TEXT
+}
+
+Table inventory {
+  inventory_id MEDIUMINT [pk]
+  film_id SMALLINT
+  store_id TINYINT
+  last_update TIMESTAMP
+}
+
+Table language {
+  language_id TINYINT [pk]
+  name CHAR(20)
+  last_update TIMESTAMP
+}
+
+Table payment {
+  payment_id SMALLINT [pk]
+  customer_id SMALLINT
+  staff_id TINYINT
+  rental_id INT
+  amount DECIMAL(5,2)
+  payment_date DATETIME
+  last_update TIMESTAMP
+}
+
+Table rental {
+  rental_id INT [pk]
+  rental_date DATETIME
+  inventory_id MEDIUMINT
+  customer_id SMALLINT
+  return_date DATETIME
+  staff_id TINYINT
+  last_update TIMESTAMP
+}
+
+Table staff {
+  staff_id TINYINT [pk]
+  first_name VARCHAR(45)
+  last_name VARCHAR(45)
+  address_id SMALLINT
+  picture BLOB
+  email VARCHAR(50)
+  store_id TINYINT
+  active TINYINT
+  username VARCHAR(16)
+  password VARCHAR(40)
+  last_update TIMESTAMP
+}
+
+Table store {
+  store_id TINYINT [pk]
+  manager_staff_id TINYINT
+  address_id SMALLINT
+  last_update TIMESTAMP
+}
+
+Ref: address.city_id > city.city_id
+
+Ref: city.country_id > country.country_id
+
+Ref: customer.address_id > address.address_id
+Ref: customer.store_id > store.store_id
+
+Ref: film.language_id > language.language_id
+Ref: film.original_language_id > language.language_id
+
+Ref: film_actor.actor_id > actor.actor_id
+Ref: film_actor.film_id > film.film_id
+
+Ref: film_category.film_id > film.film_id
+Ref: film_category.category_id > category.category_id
+
+Ref: inventory.film_id > film.film_id
+Ref: inventory.store_id > store.store_id
+
+Ref: payment.customer_id > customer.customer_id
+Ref: payment.staff_id > staff.staff_id
+Ref: payment.rental_id > rental.rental_id
+
+Ref: rental.inventory_id > inventory.inventory_id
+Ref: rental.customer_id > customer.customer_id
+Ref: rental.staff_id > staff.staff_id
+
+Ref: staff.address_id > address.address_id
+Ref: staff.store_id > store.store_id
+
+Ref: store.manager_staff_id > staff.staff_id
+Ref: store.address_id > address.address_id

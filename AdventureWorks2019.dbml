@@ -1,0 +1,799 @@
+Table dbo_awbuildversion {
+  SystemInformationID tinyint [pk]
+  DatabaseVersion varchar(100)
+  VersionDate datetime
+  ModifiedDate timestamp
+}
+
+Table dbo_databaselog {
+  DatabaseLogID int [pk]
+  PostTime datetime
+  DatabaseUser varchar(100)
+  Event varchar(100)
+  Schema varchar(100)
+  Object varchar(100)
+  TSQL nvarchar(4000)
+  XmlEvent text
+}
+
+Table dbo_errorlog {
+  ErrorLogID int [pk]
+  ErrorTime datetime
+  UserName varchar(100)
+  ErrorNumber int
+  ErrorSeverity int
+  ErrorState int
+  ErrorProcedure varchar(126)
+  ErrorLine int
+  ErrorMessage nvarchar(4000)
+}
+
+Table humanresources_department {
+  DepartmentID smallint [pk]
+  Name varchar(50)
+  GroupName varchar(50)
+  ModifiedDate timestamp
+}
+
+Table humanresources_employee {
+  BusinessEntityID int [pk]
+  NationalIDNumber varchar(15)
+  LoginID varchar(256)
+  OrganizationNode varchar(100)
+  OrganizationLevel smallint
+  JobTitle varchar(50)
+  BirthDate date
+  MaritalStatus varchar(25)
+  Gender varchar(25)
+  HireDate date
+  SalariedFlag tinyint
+  VacationHours smallint
+  SickLeaveHours smallint
+  CurrentFlag tinyint
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table humanresources_employeedepartmenthistory {
+  BusinessEntityID int [pk]
+  DepartmentID smallint [pk]
+  ShiftID tinyint [pk]
+  StartDate date [pk]
+  EndDate date
+  ModifiedDate timestamp
+}
+
+Table humanresources_employeepayhistory {
+  BusinessEntityID int [pk]
+  RateChangeDate datetime [pk]
+  Rate decimal(19,4)
+  PayFrequency tinyint
+  ModifiedDate timestamp
+}
+
+Table humanresources_jobcandidate {
+  JobCandidateID int [pk]
+  BusinessEntityID int
+  Resume text
+  ModifiedDate timestamp
+}
+
+Table humanresources_shift {
+  ShiftID tinyint [pk]
+  Name varchar(50)
+  StartTime time
+  EndTime time
+  ModifiedDate timestamp
+}
+
+Table person_address {
+  AddressID int [pk]
+  AddressLine1 varchar(60)
+  AddressLine2 varchar(60)
+  City varchar(30)
+  StateProvinceID int
+  PostalCode varchar(15)
+  SpatialLocation geometry
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_addresstype {
+  AddressTypeID int [pk]
+  Name varchar(100)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_businessentity {
+  BusinessEntityID int [pk]
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_businessentityaddress {
+  BusinessEntityID int [pk]
+  AddressID int [pk]
+  AddressTypeID int [pk]
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_businessentitycontact {
+  BusinessEntityID int [pk]
+  PersonID int [pk]
+  ContactTypeID int [pk]
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_contacttype {
+  ContactTypeID int [pk]
+  Name varchar(100)
+  ModifiedDate timestamp
+}
+
+Table person_countryregion {
+  CountryRegionCode varchar(3) [pk]
+  Name varchar(100)
+  ModifiedDate timestamp
+}
+
+Table person_emailaddress {
+  BusinessEntityID int [pk]
+  EmailAddressID int [pk]
+  EmailAddress varchar(50)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_password {
+  BusinessEntityID int [pk]
+  PasswordHash varchar(128)
+  PasswordSalt varchar(10)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_person {
+  BusinessEntityID int [pk]
+  PersonType varchar(2)
+  NameStyle tinyint
+  Title varchar(8)
+  FirstName varchar(50)
+  MiddleName varchar(50)
+  LastName varchar(50)
+  Suffix varchar(10)
+  EmailPromotion int
+  AdditionalContactInfo text
+  Demographics text
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table person_personphone {
+  BusinessEntityID int [pk]
+  PhoneNumber varchar(25) [pk]
+  PhoneNumberTypeID int [pk]
+  ModifiedDate timestamp
+}
+
+Table person_phonenumbertype {
+  PhoneNumberTypeID int [pk]
+  Name varchar(50)
+  ModifiedDate timestamp
+}
+
+Table person_stateprovince {
+  StateProvinceID int [pk]
+  StateProvinceCode varchar(3)
+  CountryRegionCode varchar(3)
+  IsOnlyStateProvinceFlag tinyint
+  Name varchar(100)
+  TerritoryID int
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_billofmaterials {
+  BillOfMaterialsID int [pk]
+  ProductAssemblyID int
+  ComponentID int
+  StartDate datetime
+  EndDate datetime
+  UnitMeasureCode varchar(3)
+  BOMLevel smallint
+  PerAssemblyQty decimal(8,2)
+  ModifiedDate timestamp
+}
+
+Table production_culture {
+  CultureID char(6) [pk]
+  Name varchar(100)
+  ModifiedDate timestamp
+}
+
+Table production_document {
+  Title varchar(50)
+  Owner int
+  FolderFlag tinyint
+  FileName varchar(400)
+  FileExtension varchar(8)
+  Revision varchar(5)
+  ChangeNumber int
+  Status tinyint
+  DocumentSummary varchar(256)
+  Document text
+  rowguid varchar(64)
+  ModifiedDate timestamp
+  DocumentNode varchar(255) [pk]
+}
+
+Table production_illustration {
+  IllustrationID int [pk]
+  Diagram text
+  ModifiedDate timestamp
+}
+
+Table production_location {
+  LocationID smallint [pk]
+  Name varchar(50)
+  CostRate decimal(19,4)
+  Availability decimal(8,2)
+  ModifiedDate timestamp
+}
+
+Table production_product {
+  ProductID int [pk]
+  Name varchar(50)
+  ProductNumber varchar(25)
+  MakeFlag tinyint
+  FinishedGoodsFlag tinyint
+  Color varchar(15)
+  SafetyStockLevel smallint
+  ReorderPoint smallint
+  StandardCost decimal(19,4)
+  ListPrice decimal(19,4)
+  Size varchar(5)
+  SizeUnitMeasureCode varchar(3)
+  WeightUnitMeasureCode varchar(3)
+  Weight decimal(8,2)
+  DaysToManufacture int
+  ProductLine varchar(2)
+  Class varchar(2)
+  Style varchar(2)
+  ProductSubcategoryID int
+  ProductModelID int
+  SellStartDate datetime
+  SellEndDate datetime
+  DiscontinuedDate datetime
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_productcategory {
+  ProductCategoryID int [pk]
+  Name varchar(100)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_productcosthistory {
+  ProductID int [pk]
+  StartDate datetime [pk]
+  EndDate datetime
+  StandardCost decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table production_productdescription {
+  ProductDescriptionID int [pk]
+  Description varchar(400)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_productdocument {
+  ProductID int [pk]
+  DocumentNode varchar(255) [pk]
+  ModifiedDate timestamp
+}
+
+Table production_productinventory {
+  ProductID int [pk]
+  LocationID smallint [pk]
+  Shelf varchar(10)
+  Bin tinyint
+  Quantity smallint
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_productlistpricehistory {
+  ProductID int [pk]
+  StartDate datetime [pk]
+  EndDate datetime
+  ListPrice decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table production_productmodel {
+  ProductModelID int [pk]
+  Name varchar(100)
+  CatalogDescription text
+  Instructions text
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_productmodelillustration {
+  ProductModelID int [pk]
+  IllustrationID int [pk]
+  ModifiedDate timestamp
+}
+
+Table production_productmodelproductdescriptionculture {
+  ProductModelID int [pk]
+  ProductDescriptionID int [pk]
+  CultureID char(6) [pk]
+  ModifiedDate timestamp
+}
+
+Table production_productphoto {
+  ProductPhotoID int [pk]
+  ThumbNailPhoto blob
+  ThumbnailPhotoFileName varchar(50)
+  LargePhoto blob
+  LargePhotoFileName varchar(50)
+  ModifiedDate timestamp
+}
+
+Table production_productproductphoto {
+  ProductID int [pk]
+  ProductPhotoID int [pk]
+  Primary tinyint
+  ModifiedDate timestamp
+}
+
+Table production_productreview {
+  ProductReviewID int [pk]
+  ProductID int
+  ReviewerName varchar(50)
+  ReviewDate datetime
+  EmailAddress varchar(50)
+  Rating int
+  Comments varchar(3850)
+  ModifiedDate timestamp
+}
+
+Table production_productsubcategory {
+  ProductSubcategoryID int [pk]
+  ProductCategoryID int
+  Name varchar(100)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table production_scrapreason {
+  ScrapReasonID smallint [pk]
+  Name varchar(50)
+  ModifiedDate timestamp
+}
+
+Table production_transactionhistory {
+  TransactionID int [pk]
+  ProductID int
+  ReferenceOrderID int
+  ReferenceOrderLineID int
+  TransactionDate datetime
+  TransactionType char(1)
+  Quantity int
+  ActualCost decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table production_transactionhistoryarchive {
+  TransactionID int [pk]
+  ProductID int
+  ReferenceOrderID int
+  ReferenceOrderLineID int
+  TransactionDate datetime
+  TransactionType char(1)
+  Quantity int
+  ActualCost decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table production_unitmeasure {
+  UnitMeasureCode varchar(3) [pk]
+  Name varchar(50)
+  ModifiedDate timestamp
+}
+
+Table production_workorder {
+  WorkOrderID int [pk]
+  ProductID int
+  OrderQty int
+  StockedQty int
+  ScrappedQty smallint
+  StartDate datetime
+  EndDate datetime
+  DueDate datetime
+  ScrapReasonID smallint
+  ModifiedDate timestamp
+}
+
+Table production_workorderrouting {
+  WorkOrderID int [pk]
+  ProductID int [pk]
+  OperationSequence smallint [pk]
+  LocationID smallint
+  ScheduledStartDate datetime
+  ScheduledEndDate datetime
+  ActualStartDate datetime
+  ActualEndDate datetime
+  ActualResourceHrs decimal(9,4)
+  PlannedCost decimal(19,4)
+  ActualCost decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table purchasing_productvendor {
+  ProductID int [pk]
+  BusinessEntityID int [pk]
+  AverageLeadTime int
+  StandardPrice decimal(19,4)
+  LastReceiptCost decimal(19,4)
+  LastReceiptDate datetime
+  MinOrderQty int
+  MaxOrderQty int
+  OnOrderQty int
+  UnitMeasureCode varchar(3)
+  ModifiedDate timestamp
+}
+
+Table purchasing_purchaseorderdetail {
+  PurchaseOrderID int [pk]
+  PurchaseOrderDetailID int [pk]
+  DueDate datetime
+  OrderQty smallint
+  ProductID int
+  UnitPrice decimal(19,4)
+  LineTotal decimal(19,4)
+  ReceivedQty decimal(8,2)
+  RejectedQty decimal(8,2)
+  StockedQty decimal(9,2)
+  ModifiedDate timestamp
+}
+
+Table purchasing_purchaseorderheader {
+  PurchaseOrderID int [pk]
+  RevisionNumber tinyint
+  Status tinyint
+  EmployeeID int
+  VendorID int
+  ShipMethodID int
+  OrderDate datetime
+  ShipDate datetime
+  SubTotal decimal(19,4)
+  TaxAmt decimal(19,4)
+  Freight decimal(19,4)
+  TotalDue decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table purchasing_shipmethod {
+  ShipMethodID int [pk]
+  Name varchar(50)
+  ShipBase decimal(19,4)
+  ShipRate decimal(19,4)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table purchasing_vendor {
+  BusinessEntityID int [pk]
+  AccountNumber varchar(15)
+  Name varchar(50)
+  CreditRating tinyint
+  PreferredVendorStatus tinyint
+  ActiveFlag tinyint
+  PurchasingWebServiceURL varchar(1024)
+  ModifiedDate timestamp
+}
+
+Table sales_countryregioncurrency {
+  CountryRegionCode varchar(3) [pk]
+  CurrencyCode char(3) [pk]
+  ModifiedDate timestamp
+}
+
+Table sales_creditcard {
+  CreditCardID int [pk]
+  CardType varchar(50)
+  CardNumber varchar(25)
+  ExpMonth tinyint
+  ExpYear smallint
+  ModifiedDate timestamp
+}
+
+Table sales_currency {
+  CurrencyCode char(3) [pk]
+  Name varchar(100)
+  ModifiedDate timestamp
+}
+
+Table sales_currencyrate {
+  CurrencyRateID int [pk]
+  CurrencyRateDate datetime
+  FromCurrencyCode char(3)
+  ToCurrencyCode char(3)
+  AverageRate decimal(19,4)
+  EndOfDayRate decimal(19,4)
+  ModifiedDate timestamp
+}
+
+Table sales_customer {
+  CustomerID int [pk]
+  PersonID int
+  StoreID int
+  TerritoryID int
+  AccountNumber varchar(10)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_person {
+  BusinessEntityID int [pk]
+  TerritoryID int
+  SalesQuota decimal(19,4)
+  Bonus decimal(19,4)
+  CommissionPct decimal(10,4)
+  SalesYTD decimal(19,4)
+  SalesLastYear decimal(19,4)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_personcreditcard {
+  BusinessEntityID int [pk]
+  CreditCardID int [pk]
+  ModifiedDate timestamp
+}
+
+Table sales_personquotahistory {
+  BusinessEntityID int [pk]
+  QuotaDate datetime [pk]
+  SalesQuota decimal(19,4)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_salesorderdetail {
+  SalesOrderID int [pk]
+  SalesOrderDetailID int [pk]
+  CarrierTrackingNumber varchar(25)
+  OrderQty smallint
+  ProductID int
+  SpecialOfferID int
+  UnitPrice decimal(19,4)
+  UnitPriceDiscount decimal(19,4)
+  LineTotal decimal(19,4)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_salesorderheader {
+  SalesOrderID int [pk]
+  RevisionNumber tinyint
+  OrderDate datetime
+  DueDate datetime
+  ShipDate datetime
+  Status tinyint
+  OnlineOrderFlag tinyint
+  SalesOrderNumber varchar(25)
+  PurchaseOrderNumber varchar(25)
+  AccountNumber varchar(15)
+  CustomerID int
+  SalesPersonID int
+  TerritoryID int
+  BillToAddressID int
+  ShipToAddressID int
+  ShipMethodID int
+  CreditCardID int
+  CreditCardApprovalCode varchar(15)
+  CurrencyRateID int
+  SubTotal decimal(19,4)
+  TaxAmt decimal(19,4)
+  Freight decimal(19,4)
+  TotalDue decimal(19,4)
+  Comment varchar(128)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_salesorderheadersalesreason {
+  SalesOrderID int [pk]
+  SalesReasonID int [pk]
+  ModifiedDate timestamp
+}
+
+Table sales_salespersonquota {
+  BusinessEntityID int [pk]
+  QuotaDate datetime [pk]
+  SalesQuota decimal(19,4)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_salesreason {
+  SalesReasonID int [pk]
+  Name varchar(50)
+  ReasonType varchar(50)
+  ModifiedDate timestamp
+}
+
+Table sales_salestaxrate {
+  SalesTaxRateID int [pk]
+  StateProvinceID int
+  TaxType tinyint
+  TaxRate decimal(10,4)
+  Name varchar(50)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_salesterritory {
+  TerritoryID int [pk]
+  Name varchar(50)
+  CountryRegionCode varchar(3)
+  GroupName varchar(50)
+  SalesYTD decimal(19,4)
+  SalesLastYear decimal(19,4)
+  CostYTD decimal(19,4)
+  CostLastYear decimal(19,4)
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_salesterritoryhistory {
+  BusinessEntityID int [pk]
+  TerritoryID int [pk]
+  StartDate datetime [pk]
+  EndDate datetime
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_shoppingcartitem {
+  ShoppingCartItemID int [pk]
+  ShoppingCartID varchar(50)
+  Quantity int
+  ProductID int
+  DateCreated datetime
+  ModifiedDate timestamp
+}
+
+Table sales_specialoffer {
+  SpecialOfferID int [pk]
+  Description varchar(255)
+  DiscountPct decimal(10,4)
+  Type varchar(50)
+  Category varchar(50)
+  StartDate datetime
+  EndDate datetime
+  MinQty int
+  MaxQty int
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_specialofferproduct {
+  SpecialOfferID int [pk]
+  ProductID int [pk]
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Table sales_store {
+  BusinessEntityID int [pk]
+  Name varchar(50)
+  SalesPersonID int
+  Demographics text
+  rowguid varchar(64)
+  ModifiedDate timestamp
+}
+
+Ref: humanresources_employee.BusinessEntityID > person_person.BusinessEntityID
+Ref: humanresources_employeedepartmenthistory.DepartmentID > humanresources_department.DepartmentID
+Ref: humanresources_employeedepartmenthistory.BusinessEntityID > humanresources_employee.BusinessEntityID
+Ref: humanresources_employeedepartmenthistory.ShiftID > humanresources_shift.ShiftID
+Ref: humanresources_employeepayhistory.BusinessEntityID > humanresources_employee.BusinessEntityID
+Ref: humanresources_jobcandidate.BusinessEntityID > humanresources_employee.BusinessEntityID
+Ref: person_address.StateProvinceID > person_stateprovince.StateProvinceID
+Ref: person_businessentityaddress.AddressID > person_address.AddressID
+Ref: person_businessentityaddress.AddressTypeID > person_addresstype.AddressTypeID
+Ref: person_businessentityaddress.BusinessEntityID > person_businessentity.BusinessEntityID
+Ref: person_businessentitycontact.BusinessEntityID > person_businessentity.BusinessEntityID
+Ref: person_businessentitycontact.ContactTypeID > person_contacttype.ContactTypeID
+Ref: person_businessentitycontact.PersonID > person_person.BusinessEntityID
+Ref: person_emailaddress.BusinessEntityID > person_person.BusinessEntityID
+Ref: person_password.BusinessEntityID > person_person.BusinessEntityID
+Ref: person_person.BusinessEntityID > person_businessentity.BusinessEntityID
+Ref: person_personphone.BusinessEntityID > person_person.BusinessEntityID
+Ref: person_personphone.PhoneNumberTypeID > person_phonenumbertype.PhoneNumberTypeID
+Ref: person_stateprovince.CountryRegionCode > person_countryregion.CountryRegionCode
+Ref: person_stateprovince.TerritoryID > sales_salesterritory.TerritoryID
+Ref: production_billofmaterials.ComponentID > production_product.ProductID
+Ref: production_billofmaterials.ProductAssemblyID > production_product.ProductID
+Ref: production_billofmaterials.UnitMeasureCode > production_unitmeasure.UnitMeasureCode
+Ref: production_document.Owner > humanresources_employee.BusinessEntityID
+Ref: production_product.ProductModelID > production_productmodel.ProductModelID
+Ref: production_product.ProductSubcategoryID > production_productsubcategory.ProductSubcategoryID
+Ref: production_product.SizeUnitMeasureCode > production_unitmeasure.UnitMeasureCode
+Ref: production_product.WeightUnitMeasureCode > production_unitmeasure.UnitMeasureCode
+Ref: production_productcosthistory.ProductID > production_product.ProductID
+Ref: production_productdocument.DocumentNode > production_document.DocumentNode
+Ref: production_productdocument.ProductID > production_product.ProductID
+Ref: production_productinventory.LocationID > production_location.LocationID
+Ref: production_productinventory.ProductID > production_product.ProductID
+Ref: production_productlistpricehistory.ProductID > production_product.ProductID
+Ref: production_productmodelillustration.IllustrationID > production_illustration.IllustrationID
+Ref: production_productmodelillustration.ProductModelID > production_productmodel.ProductModelID
+Ref: production_productmodelproductdescriptionculture.CultureID > production_culture.CultureID
+Ref: production_productmodelproductdescriptionculture.ProductDescriptionID > production_productdescription.ProductDescriptionID
+Ref: production_productmodelproductdescriptionculture.ProductModelID > production_productmodel.ProductModelID
+Ref: production_productproductphoto.ProductID > production_product.ProductID
+Ref: production_productproductphoto.ProductPhotoID > production_productphoto.ProductPhotoID
+Ref: production_productreview.ProductID > production_product.ProductID
+Ref: production_productsubcategory.ProductCategoryID > production_productcategory.ProductCategoryID
+Ref: production_transactionhistory.ProductID > production_product.ProductID
+Ref: production_transactionhistory.ReferenceOrderID > purchasing_purchaseorderheader.PurchaseOrderID
+Ref: production_transactionhistoryarchive.ProductID > production_product.ProductID
+Ref: production_transactionhistoryarchive.ReferenceOrderID > purchasing_purchaseorderheader.PurchaseOrderID
+Ref: production_workorder.ProductID > production_product.ProductID
+Ref: production_workorder.ScrapReasonID > production_scrapreason.ScrapReasonID
+Ref: production_workorderrouting.LocationID > production_location.LocationID
+Ref: production_workorderrouting.ProductID > production_product.ProductID
+Ref: production_workorderrouting.WorkOrderID > production_workorder.WorkOrderID
+Ref: purchasing_productvendor.BusinessEntityID > purchasing_vendor.BusinessEntityID
+Ref: purchasing_productvendor.ProductID > production_product.ProductID
+Ref: purchasing_productvendor.UnitMeasureCode > production_unitmeasure.UnitMeasureCode
+Ref: purchasing_purchaseorderdetail.ProductID > production_product.ProductID
+Ref: purchasing_purchaseorderdetail.PurchaseOrderID > purchasing_purchaseorderheader.PurchaseOrderID
+Ref: purchasing_purchaseorderheader.EmployeeID > humanresources_employee.BusinessEntityID
+Ref: purchasing_purchaseorderheader.ShipMethodID > purchasing_shipmethod.ShipMethodID
+Ref: purchasing_purchaseorderheader.VendorID > purchasing_vendor.BusinessEntityID
+Ref: purchasing_vendor.BusinessEntityID > person_businessentity.BusinessEntityID
+Ref: sales_countryregioncurrency.CountryRegionCode > person_countryregion.CountryRegionCode
+Ref: sales_countryregioncurrency.CurrencyCode > sales_currency.CurrencyCode
+Ref: sales_currencyrate.FromCurrencyCode > sales_currency.CurrencyCode
+Ref: sales_currencyrate.ToCurrencyCode > sales_currency.CurrencyCode
+Ref: sales_customer.PersonID > person_person.BusinessEntityID
+Ref: sales_customer.StoreID > sales_store.BusinessEntityID
+Ref: sales_customer.TerritoryID > sales_salesterritory.TerritoryID
+Ref: sales_person.BusinessEntityID > person_businessentity.BusinessEntityID
+Ref: sales_person.TerritoryID > sales_salesterritory.TerritoryID
+Ref: sales_personcreditcard.BusinessEntityID > sales_person.BusinessEntityID
+Ref: sales_personcreditcard.CreditCardID > sales_creditcard.CreditCardID
+Ref: sales_personquotahistory.BusinessEntityID > sales_person.BusinessEntityID
+Ref: sales_salesorderdetail.ProductID > production_product.ProductID
+Ref: sales_salesorderdetail.SalesOrderID > sales_salesorderheader.SalesOrderID
+Ref: sales_salesorderdetail.SpecialOfferID > sales_specialoffer.SpecialOfferID
+Ref: sales_salesorderheader.BillToAddressID > person_address.AddressID
+Ref: sales_salesorderheader.CustomerID > sales_customer.CustomerID
+Ref: sales_salesorderheader.SalesPersonID > sales_person.BusinessEntityID
+Ref: sales_salesorderheader.ShipMethodID > purchasing_shipmethod.ShipMethodID
+Ref: sales_salesorderheader.ShipToAddressID > person_address.AddressID
+Ref: sales_salesorderheader.TerritoryID > sales_salesterritory.TerritoryID
+Ref: sales_salesorderheadersalesreason.SalesOrderID > sales_salesorderheader.SalesOrderID
+Ref: sales_salesorderheadersalesreason.SalesReasonID > sales_salesreason.SalesReasonID
+Ref: sales_salestaxrate.StateProvinceID > person_stateprovince.StateProvinceID
+Ref: sales_salesterritory.CountryRegionCode > person_countryregion.CountryRegionCode
+Ref: sales_salesterritoryhistory.BusinessEntityID > sales_person.BusinessEntityID
+Ref: sales_salesterritoryhistory.TerritoryID > sales_salesterritory.TerritoryID
+Ref: sales_shoppingcartitem.ProductID > production_product.ProductID
+Ref: sales_specialofferproduct.ProductID > production_product.ProductID
+Ref: sales_specialofferproduct.SpecialOfferID > sales_specialoffer.SpecialOfferID
+Ref: sales_store.BusinessEntityID > person_businessentity.BusinessEntityID
+Ref: sales_store.SalesPersonID > sales_person.BusinessEntityID
